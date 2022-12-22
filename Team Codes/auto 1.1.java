@@ -106,14 +106,11 @@ double Green;
 
 
         while (opModeIsActive()) {
-            Move_Forward(00,00);
-            while(motorfrontright.isBusy() ||motorfrontleft.isBusy()||motorbackleft.isBusy()||motorbackright.isBusy()){
-            }
-            Color_read();
+            
             Check_Distance();
             Move_Forward(00,00);
             Color_read();
-            Turn_After_Clr();
+            /Turn_After_Clr();
             forward_after_clr(00,00);
             left_to_Cone(00,00);
             telemetry.update();
