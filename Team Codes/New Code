@@ -134,6 +134,21 @@ colorpark = 0;
     left_to_Cone(00,00);
     while(motorfrontright.isBusy() ||motorfrontleft.isBusy()||motorbackleft.isBusy()||motorbackright.isBusy()){ }
     sleep(1000);
+    Disposser(00,00);
+    while(Disposser.isBusy());
+    sleep(1000);
+    void Arm(int tar,int spd, int Pos){
+        ArmMotor.setTargetPosition(tar);
+        ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        ArmMotor.setVelocity(spd);
+        while(ArmMotor.isBusy()){
+            
+        }
+        servo1.setPosition(Pos);
+        servo2.setPosition(Pos);
+        sleep(1000);
+    }
+    sleep(1000);
     
     
     
@@ -234,9 +249,7 @@ colorpark = 0;
     
     }
     
-    Void Arm(int tar, int vel){
     
-    }
     
     void Arm(int tar,int spd, int Pos){
         ArmMotor.setTargetPosition(tar);
