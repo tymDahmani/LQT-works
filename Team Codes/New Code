@@ -14,7 +14,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name="Basic: Omni Linear OpMode", group="Linear Opmode")
 
-public class Auto extends LinearOpMode {
+public class Auto_New extends LinearOpMode {
    //// distance vars
 //Ditance to the right
 DistanceSensor distance1;
@@ -44,8 +44,8 @@ Servo servo2;
 //color var
 ColorSensor colorsens;
 
-  ///parking postion
-int parking = 0;
+  ///the position of the robot in the field
+int position = 0;
 //if its 1 that means it will park to the right
 //if its 2 that means it will park to the left
 
@@ -57,7 +57,10 @@ double Blue;
 double Green;
 
 //colorPark
-colorpark = 0;
+int colorpark = 0;
+
+// normal busy var, that collects (motors).isBusy
+
 
 
 @Override
@@ -92,10 +95,10 @@ colorpark = 0;
     
     //Mode for the disposser motor and config
     DisPosser = hardwareMap.get(DcMotor.class, "Disposer");
-    Disposser.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    DisPosser.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     
     
-    //configuing the servos
+    //configuring the servos
     servo1 = hardwareMap.get(Servo.class, "servo1");
     servo2 = hardwareMap.get(Servo.class, "servo2");
     
@@ -107,75 +110,109 @@ colorpark = 0;
     //colorsensor config
     colorsens = hardwareMap.colorSensor.get("clr");
     
-    while (opModeIsActive()) {s
+    while (opModeIsActive()) {
     Check_distance();
-    //it is on the right
-    if(parking == 1){
-    Move_Foward(00,00);
-    while(motorfrontright.isBusy() ||motorfrontleft.isBusy()||motorbackleft.isBusy()||motorbackright.isBusy()){ }
-    sleep(1000);
-    
-    //reads the color for the parking end
-    Color_read();
-    if(red == 00 && blue == 00 && green ==){
-    colorpark = 1;
-    }
-    if(red == 00 && blue == 00 && green ==){
-    colorpark = 2;
-    }
-    if(red == 00 && blue == 00 && green ==){
-    colorpark = 3;
-    }
-    //after the color to face the cone
-    sleep(1000);
-    forward_after_clr();
-    while(motorfrontright.isBusy() ||motorfrontleft.isBusy()||motorbackleft.isBusy()||motorbackright.isBusy()){ }
-    sleep(1000);
-    left_to_Cone(00,00);
-    while(motorfrontright.isBusy() ||motorfrontleft.isBusy()||motorbackleft.isBusy()||motorbackright.isBusy()){ }
-    sleep(1000);
-    Disposser(00,00);
-    while(Disposser.isBusy());
-    sleep(1000);
-    void Arm(int tar,int spd, int Pos){
-        ArmMotor.setTargetPosition(tar);
-        ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        ArmMotor.setVelocity(spd);
-        while(ArmMotor.isBusy()){
-            
+        //the robot is on the right
+        if(position == 1){
+        Move_Forward(00, 00); //values: target pos(motors), speed 
+        while(motorfrontright.isBusy() ||motorfrontleft.isBusy()||motorbackleft.isBusy()||motorbackright.isBusy()){
+            idle();
         }
-        servo1.setPosition(Pos);
-        servo2.setPosition(Pos);
         sleep(1000);
-    }
-    sleep(1000);
-    
-    
-    
-           
-    
- }
+        
+        //reads the color for the parking end
+        Color_read();
+        if(Red == 00 && Blue == 00 && Green ==00){
+            colorpark = 1;
+        }
+        if(Red == 00 && Blue == 00 && Green ==00){
+            colorpark = 2;
+        }
+        if(Red == 00 && Blue == 00 && Green ==00){
+            colorpark = 3;
+        }
+        //turn to face the high junc
+        sleep(1000);
+        turning_to_face_junc(00, 00);// values: target pos(motors), speed
+        while(motorfrontright.isBusy() ||motorfrontleft.isBusy()||motorbackleft.isBusy()||motorbackright.isBusy()){
+            idle();
+        }
+        sleep(1000);
+        // using the slide
+        Disposser(00,00); // values: target position, speed
+        while(DisPosser.isBusy()) {
+            idle();
+        }
+        sleep(1000);
+        
+        // opening the arm:
+        Arm(00, 00, 00); // values: target pos(the arm motor), speed, position(servo)
+        while(ArmMotor.isBusy()) {
+            idle();
+        }
+        sleep(1000);
+        
+        // get the arm back to its init pos
+        home(00, 00, 00); //values: target pos(the arm motor), speed, position(servo)
+        while(ArmMotor.isBusy() && (motorfrontright.isBusy() ||motorfrontleft.isBusy()||motorbackleft.isBusy()||motorbackright.isBusy())) {
+            idle();
+        }
+        sleep(1000);
+        
+        // go to the cones on the field and take one
+        conesF();
+        while(ArmMotor.isBusy() && (motorfrontright.isBusy() ||motorfrontleft.isBusy()||motorbackleft.isBusy()||motorbackright.isBusy())){
+            idle();
+        }
+        sleep(1000);
+        
+        // face the high junction from the cones place
+        faceHighJuncCones();
+        // note: the high junc here will be the one near the cones, not the same one
+        while(motorfrontright.isBusy() ||motorfrontleft.isBusy()||motorbackleft.isBusy()||motorbackright.isBusy()){
+            idle();
+        }
+        sleep(1000);
+        
+        
+        // put the cone catched in the junc
+        putTheConeJunc();
+        sleep(1000);
+        
+        // get the arm back to its init pos
+        home(00, 00, 00); //values: target pos(the arm motor), speed, position(servo)
+        
+        // turn to face the cones again
+        faceTheCones(); 
+        
+        // take a cone from the ones in the field
+        take_cone();
+        
+        
+        }
     
     
     }
     
   }
+  // the robot strategy steps functions:
+  
   void Check_distance(){
   space1 = distance1.getDistance(DistanceUnit.CM);
-  float = distance2.getDistance(DistanceUnit.CM);
+  space2 = distance2.getDistance(DistanceUnit.CM);
   
-  //comparing the values of the distance //right is higher
-   if(space1>space2){
-        //means the robot is going to park to the right corner
-        parking = 1;
-           
-    }
-       //comparing the balues of the distance // left is higher
+        //comparing the values of the distance //right is higher
+       if(space1>space2){
+            //means the robot is going to park to the right corner
+            position = 1;
+          
+        }
+        //comparing the balues of the distance // left is higher
        if(space1<space2){
-       //means the robot is parking to the left corner
-       parking =2;
+            //means the robot is parking to the left corner
+            position = 2;
+        }
     }
-}
 
 
 
@@ -202,11 +239,15 @@ colorpark = 0;
         Red = colorsens.red();
         Blue = colorsens.blue();
         Green = colorsens.green();
+        telemetry.addData("red: ", Red);
+        telemetry.addData("blue: ", Blue);
+        telemetry.addData("green: ", Green);
+        telemetry.update();
     }
     
 
     
-    void forward_after_clr(int tar, int spd){
+    void turning_to_face_junc(int tar, int spd){
         //setting the target position to the motors
         motorfrontright.setTargetPosition(tar);
         motorfrontleft.setTargetPosition(tar);
@@ -224,28 +265,12 @@ colorpark = 0;
         motorbackright.setPower(spd);
     }
     
-    void left_to_Cone(int tar, int spd){
-        //setting the target position to the motors
-        motorfrontright.setTargetPosition(tar);
-        motorfrontleft.setTargetPosition(tar);
-        motorbackright.setTargetPosition(tar);
-        motorbackleft.setTargetPosition(tar);
-        //telling the movement motor to go to the position they were told to
-        motorfrontright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motorfrontleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motorbackleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motorbackright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        //giving the movement motors the power to move
-        motorfrontright.setPower(spd);
-        motorfrontleft.setPower(spd);
-        motorbackleft.setPower(spd);
-        motorbackright.setPower(spd);
-    }
+    
     
     void Disposser(int tar,int speed){
-    Disposser.setTargetPosition(tar);
-    Disposser.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    Disposser.setPower(speed);
+        Disposser.setTargetPosition(tar);
+        Disposser.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Disposser.setPower(speed);
     
     }
     
@@ -256,13 +281,78 @@ colorpark = 0;
         ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         ArmMotor.setVelocity(spd);
         while(ArmMotor.isBusy()){
-            
+            idle();
         }
         servo1.setPosition(Pos);
         servo2.setPosition(Pos);
     }
     
+    void putTheConeJunc() {
+        // using the slide:
+        Disposser(00,00); // values: target position, speed
+        while(Disposser.isBusy()) {
+            idle();
+        }
+        sleep(1000);
+        // opening the arm:
+        Arm(00, 00, 00); // values: target pos(the arm motor), speed, position(servo)
+        while(ArmMotor.isBusy()) {
+            idle();
+        }
+    }
     
+    // the initial state for the whole arm and slide
+    void home(int tar, int spd, int pos){
+        // disposer:
+        Disposser.setTargetPosition(tar);
+        Disposser.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Disposser.setPower(spd);
+        
+        // arm:
+        ArmMotor.setTargetPosition(tar);
+        ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        ArmMotor.setVelocity(spd);
+        while(ArmMotor.isBusy()){
+            idle();
+        }
+        servo1.setPosition(Pos);
+        servo2.setPosition(Pos);
+        
+    //note: all the values must be the numbers of the zero pos of the actuators
+    }
+
+    //go to the cones on the field
+    void conesF() {
+      ////// moving. go forward and turn right to catch the cone
+        Move_Foward(00,00);// values: target pos(motors), speed 
+      ////turn right
+        Move_Foward(00,00);// values: target pos(motors), speed 
+      //// go forward alittle
+        Move_Foward(00,00);// values: target pos(motors), speed 
+      ////catch the cone
+        Arm(00, 00, 00); // values: target pos(the arm motor), speed, position(servo)
+        
+    }
+    
+    // turn to face the high junc from the place of the cones
+    void faceHighJuncCones() {
+        turning_to_face_junc(00, 00);// values: target pos(motors), speed
+    }
+    
+    // putTheConeJunc (func)
+    
+    //turn to face the cones back
+    void faceTheCones() {
+        // give the motors the spicifec values to turn only
+        Move_Foward(00,00);// values: target pos(motors), speed
+    }
+    
+    // catch the cone
+    void take_cone() {
+        // catch the cone
+        Arm(00, 00, 00); // values: target pos(the arm motor), speed, position(servo)
+    }
     
     
 }
+
