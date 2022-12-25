@@ -1,19 +1,19 @@
-	1. use the distance sensor
-	2. Go forward to read the cone with the color snsr
-	3. Turn to face the high junc and unlseash the disposer 
-	4. Use the arm to put the cone in the high junc and open the servo
-	5. restore return the arm to it is position and restore restore the disposer
-	6. Go to the cones in the field and take one
-	7. Turn to face the high junc
-	8. Put the cone in it
-	9. Take another cone
-	10. Put it in the high junc
-	11. Loop 8 and 10 steps for (4) time. // the number might change
-	12. Take another cone 
-	13. Turn to face the medium junc
-	14. Put the cone there 
-	15. restore the disposer and arm
-	16. Take another cone
-	17. Turn to face the low one
-	18. Put the cone there
-	19. Park in the place read by the color snsr 
+1. use the distance sensor
+2. Go forward to read the cone with the color snsr
+3. Turn to face the high junc and unlseash the disposer 
+4. Use the arm to put the cone in the high junc and open the servo
+5. restore return the arm to it is position and restore restore the disposer
+6. Go to the cones in the field and take one
+7. Turn to face the high junc
+8. Put the cone in it
+9. Take another cone
+10. Put it in the high junc
+11. Loop 8 and 10 steps for (4) time. // the number might change
+12. Take another cone 
+13. Turn to face the medium junc
+14. Put the cone there 
+15. restore the disposer and arm
+16. Take another cone
+17. Turn to face the low one
+18. Put the cone there
+19. Park in the place read by the color snsr 
