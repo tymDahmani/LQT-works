@@ -170,14 +170,24 @@ int colorpark = 0;
         clr.enableLed(true);
         currentColor = Color.rgb(clr.red(), clr.green(), clr.blue());
         if (JavaUtil.colorToSaturation(currentColor) >= 0.6 && JavaUtil.colorToHue(currentColor) > 200 && JavaUtil.colorToHue(currentColor) < 235) {
+          // light blue
           colorpark = 1;
-          telemetry.update();
           clr.enableLed(false);
           
-        } else {
-          motor = true;
-          telemetry.update();
         }
+        if (JavaUtil.colorToSaturation(currentColor) >= 0.6 && JavaUtil.colorToHue(currentColor) > 290 && JavaUtil.colorToHue(currentColor) < 310) {
+          // pink purple
+          colorpark = 2;
+          clr.enableLed(false);
+          
+        }
+        if (JavaUtil.colorToSaturation(currentColor) >= 0.6 && JavaUtil.colorToHue(currentColor) > 20 && JavaUtil.colorToHue(currentColor) < 40) {
+          // orange
+          colorpark = 3;
+          clr.enableLed(false);
+          
+        }
+        
         telemetry.addData("saturation",JavaUtil.colorToSaturation(currentColor));
         telemetry.addData("monako",JavaUtil.colorToHue(currentColor));
         
