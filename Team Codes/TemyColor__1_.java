@@ -78,15 +78,7 @@ public class TemyColor__1_ extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         
-        if(clr.red() > 120 && clr.red() < 370) {
-                moveN(30, 0.4);
-                telemetry.addData("robot moves? ", "yes");
-                telemetry.update();
-            } else if(clr.blue() >= 150 && clr.blue() <= 700) {
-                
-                telemetry.addData("robot moves?", "no");
-                telemetry.update();
-            }
+        
         
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
