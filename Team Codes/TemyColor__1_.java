@@ -184,6 +184,8 @@ public class TemyColor__1_ extends LinearOpMode {
                 // idle();
                 telemetry.addData("works fine? ", "no" );
                 telemetry.update();
+            } else {
+                telemetry.addData("works fine? ", "noooope");
             }
             
             
