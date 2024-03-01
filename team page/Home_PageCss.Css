@@ -50,7 +50,7 @@ nav {
     align-items: center;
     justify-content: space-between;
     padding-right: 10%;
-    padding-left: 10%;
+    padding-left: 5%;
 }
 
 nav ul li {
@@ -94,18 +94,47 @@ button:hover {
 }
 
 .team-info {
-    top: 100%;
-    width: 100%;
+    position: relative;
+    bottom: 650px;
+    padding-left: 100px;
+    padding-right: 100px;
 }
 
 .team-info h3 {
     padding: 10px;
-    color: aliceblue;
+    color: white;
     line-height: 40px;
 }
 
 .team-info p {
     padding: 5px;
-    color: aliceblue;
+    color: white;
     line-height: 20px;
+}
+
+.group-photo {
+    position: relative;
+    bottom: 610px;
+}
+
+.click-for-port {
+    position: relative;
+    padding-left: 100px;
+    bottom: 610px;
+}
+
+.port-text {
+    float: right;
+}
+
+.port-text h3 {
+    color: white;
+    size: 40px;
+    line-height: 30px;
+}
+
+.port-text p {
+    color: white;
+    size: 20px;
+    line-height: 15px;
 }
