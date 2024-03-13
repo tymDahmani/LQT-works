@@ -5,12 +5,7 @@
 
 .wrapper {
     margin: 0 auto;
-    width: 1000px;
-}
-
-.headpart {
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    width: 100%;
 }
 
 .Hotbar {
@@ -31,7 +26,7 @@
 .nav ul li {
     list-style-type: none;
     display: inline-block;
-    padding: 10px 12px;
+    padding: 7px 9px;
 }
 
 .nav ul li a {
@@ -69,29 +64,124 @@ button:hover {
 }
 
 /* portfolio css below */
-
-.port-cover {
-    width: 300px;
-}
-
-.portfolio-link {
-    position: relative;
-    bottom: 575px;
-}
-
 .port-text {
     position: relative;
-    bottom: 540px;
+    bottom: 960px;
 }
 
 .port-text h3 {
     color: white;
     size: 40px;
-    line-height: 30px;
+    line-height: 20px;
 }
 
 .port-text p {
     color: white;
-    size: 20px;
+    size: 15px;
     line-height: 15px;
+}
+
+.port-cover {
+    position: relative;
+    width: 100%;
+    width: 280px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.portfolio-link {
+    position: relative;
+    bottom: 480px;
+}
+
+
+@media only screen and (min-width: 1000px) {
+    .wrapper {
+        margin: 0 auto;
+        width: 1000px;
+    }
+
+    .Hotbar {
+        height: 100vh;
+        width: 100%;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-right: 10%;
+        padding-left: 5%;
+    }
+
+    .nav ul li {
+        list-style-type: none;
+        display: inline-block;
+        padding: 10px 12px;
+    }
+
+    .nav ul li a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        font-family: 'Times New Roman';
+    }
+
+    .nav ul li a:hover {
+        color: black;
+        border: none;
+        background: white;
+        padding: 5px 5px;
+        border-radius: 20px;
+        transition: .15s;
+
+    }
+
+    button {
+        border: none;
+        background-color: white;
+        padding: 12px 20px;
+        border-radius: 20px;
+        color: black;
+        font-family: 'Times New Roman';
+        font-weight: bold;
+        font-size: 15px;
+        transition: .15s;
+    }
+
+    button:hover {
+        transform: scale(0.8);
+        cursor: hand;
+    }
+
+    /* portfolio css */
+    .port-cover {
+        width: 300px;
+        bottom: 0px;
+    }
+
+    .portfolio-link {
+        position: relative;
+        bottom: 600px;
+    }
+
+    .port-text {
+        position: relative;
+        bottom: 570px;
+    }
+
+    .port-text h3 {
+        color: white;
+        size: 40px;
+        line-height: 30px;
+    }
+
+    .port-text p {
+        color: white;
+        size: 20px;
+        line-height: 15px;
+    }
+
 }
